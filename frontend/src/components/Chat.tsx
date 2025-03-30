@@ -8,12 +8,14 @@ const Chat = () => {
   const [loading, setLoading] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const recognitionRef = useRef<SpeechRecognition | null>(null);
+  // eslint-disable-next-line
+  const recognitionRef = useRef<any | null>(null);
   const synthesisRef = useRef<SpeechSynthesis | null>(null);
 
   useEffect(() => {
     // Initialize speech recognition
     if ('webkitSpeechRecognition' in window) {
+      // eslint-disable-next-line
       recognitionRef.current = new (window.webkitSpeechRecognition as any)();
       recognitionRef.current.continuous = false;
       recognitionRef.current.interimResults = false;
@@ -25,11 +27,12 @@ const Chat = () => {
         setIsListening(false);
         // Automatically send the message when speech recognition is complete
         if (transcript.trim()) {
+          // eslint-disable-next-line
           handleSubmit(new Event('submit') as any, transcript);
         }
       };
-
-      recognitionRef.current.onerror = (event: SpeechRecognitionError) => {
+    // eslint-disable-next-line
+      recognitionRef.current.onerror = (event: any) => {
         console.error('Speech recognition error:', event.error);
         setIsListening(false);
       };
